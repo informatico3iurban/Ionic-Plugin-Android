@@ -68,7 +68,7 @@ public class UtilsAndroid extends CordovaPlugin {
 
                 byte[] macBytes = nif.getHardwareAddress();
                 if (macBytes == null) {
-                      callback.success(res1.toString()); 
+                      callback.success("02:00:00:00:00:00"); 
                 }
 
                 StringBuilder res1 = new StringBuilder();
