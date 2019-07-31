@@ -166,8 +166,8 @@ public class UtilsAndroid extends CordovaPlugin {
                 } else {
                         callback.success(true); 
                 }
-            }, 1000);
-        }
+            }
+        }, 1000);
     }
 
     public void enableWifi() {
