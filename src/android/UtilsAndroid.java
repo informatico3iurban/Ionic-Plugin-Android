@@ -204,11 +204,11 @@ public class UtilsAndroid extends CordovaPlugin {
         }
     }
 
-    public void log(JSONArray args){
-            Log.d(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
+    public void log(JSONArray args) throws JSONException{
+        Log.d(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
     }
 
-    public void logError(JSONArray args){
-            Log.e(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
+    public void logError(JSONArray args) throws JSONException{
+        Log.e(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
     }
 }
