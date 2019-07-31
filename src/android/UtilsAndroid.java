@@ -116,7 +116,7 @@ public class UtilsAndroid extends CordovaPlugin {
 
             String networkSSID = args.getJSONObject(0).getString("ssid");
             String password = args.getJSONObject(0).getString("password");
-            timeout = Integer.valueOf(args.getJSONObject(0).getString("timeout");
+            timeout = Integer.valueOf(args.getJSONObject(0).getString("timeout"));
 
             WifiConfiguration conf = new WifiConfiguration();
             conf.SSID = "\"" + networkSSID + "\"";
