@@ -15,6 +15,7 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Build;
 import android.content.Context;
+import java.util.Arrays;
 
 public class UtilsAndroid extends CordovaPlugin {
     private static final String TAG = "HOTEL_DIGITAL";
@@ -120,9 +121,9 @@ public class UtilsAndroid extends CordovaPlugin {
             Log.d(TAG, conf.SSID + " " + conf.preSharedKey);
 
             int networkId = wifiManager.getConnectionInfo().getNetworkId();
-            Log.d(CustomConstants.TAG, "network disabled " + wifiManager.disableNetwork(networkId));
-            Log.d(CustomConstants.TAG, "network removed " + wifiManager.removeNetwork(networkId));
-            Log.d(CustomConstants.TAG, "network saved " + wifiManager.saveConfiguration());
+            Log.d(TAG, "network disabled " + wifiManager.disableNetwork(networkId));
+            Log.d(TAG, "network removed " + wifiManager.removeNetwork(networkId));
+            Log.d(TAG, "network saved " + wifiManager.saveConfiguration());
 
             wifiManager.addNetwork(conf);
 
@@ -151,7 +152,7 @@ public class UtilsAndroid extends CordovaPlugin {
         }
     }
 
-    public void verifyingConnection(){
+    public void verifyingConnection(CallbackContext callback){
         int counter = 0;
         final Handler handler = new Handler();    
         handler.postDelayed(new Runnable() {
@@ -170,7 +171,7 @@ public class UtilsAndroid extends CordovaPlugin {
         }, 1000);
     }
 
-    public void enableWifi() {
+    public void enableWifi(CallbackContext callback) {
         try{
             boolean wifiEnabled = false;
             WifiManager wifiManager = (WifiManager) this.cordova.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
