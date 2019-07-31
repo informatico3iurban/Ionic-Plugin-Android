@@ -20,7 +20,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class UtilsAndroid extends CordovaPlugin {
-    private static final String TAG = "HOTEL_DIGITAL";
+    private String TAG = "HOTEL_DIGITAL";
     private Context context;
     int counter = 0, timeout = 10;
 
@@ -207,7 +207,7 @@ public class UtilsAndroid extends CordovaPlugin {
     public void log(JSONArray args) {
         try{
             TAG = args.getJSONObject(0).getString("TAG");
-            
+
             Log.d(TAG, args.getJSONObject(0).getString("message"));
         }catch(Exception e){
             Log.e(TAG, "" + e);
