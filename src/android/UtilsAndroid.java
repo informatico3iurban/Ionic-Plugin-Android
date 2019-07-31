@@ -22,7 +22,7 @@ import android.net.NetworkInfo;
 public class UtilsAndroid extends CordovaPlugin {
     private static final String TAG = "HOTEL_DIGITAL";
     private Context context;
-    int counter = 0;
+    int counter = 0, timeout = 10;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -48,6 +48,14 @@ public class UtilsAndroid extends CordovaPlugin {
         } else if (action.equals("enableWifi")) {
             Log.d(TAG, "in action enableWifi");
             this.enableWifi(callbackContext);
+            return true;
+        } else if (action.equals("log")) {
+            Log.d(TAG, "in action log");
+            this.log(args);
+            return true;
+        } else if (action.equals("logError")) {
+            Log.d(TAG, "in action logError");
+            this.logError(args);
             return true;
         }
         return false;
@@ -108,6 +116,7 @@ public class UtilsAndroid extends CordovaPlugin {
 
             String networkSSID = args.getJSONObject(0).getString("ssid");
             String password = args.getJSONObject(0).getString("password");
+            timeout = Integer.valueOf(args.getJSONObject(0).getString("timeout");
 
             WifiConfiguration conf = new WifiConfiguration();
             conf.SSID = "\"" + networkSSID + "\"";
@@ -163,7 +172,7 @@ public class UtilsAndroid extends CordovaPlugin {
                 //Log.d(CustomConstants.TAG, "CONNECTED " + InternetHelper.wifiIsConnected(context));
                 if (!wifiIsConnected()) {
                      counter++;
-                    if(counter < 10) {
+                    if(counter < timeout) {
                         Log.d(TAG, "checking connection, counter " + counter);
                         handler.postDelayed(this, 1000);                       
                     }else{
@@ -193,5 +202,13 @@ public class UtilsAndroid extends CordovaPlugin {
         }catch(Exception e){
              callback.error("" + e);
         }
+    }
+
+    public void log(JSONArray args){
+            Log.d(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
+    }
+
+    public void logError(JSONArray args){
+            Log.e(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
     }
 }

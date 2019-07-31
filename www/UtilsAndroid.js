@@ -15,3 +15,11 @@ module.exports.connectToWifi = function (arg0, success, error){
 module.exports.enableWifi = function (success, error){
     exec(success, error, 'UtilsAndroid', 'enableWifi');
 }
+
+module.exports.log = function (success, error){
+    exec(success, error, 'UtilsAndroid', 'log', [arg0]);
+}
+
+module.exports.logError = function (success, error){
+    exec(success, error, 'UtilsAndroid', 'logError', [arg0]);
+}
