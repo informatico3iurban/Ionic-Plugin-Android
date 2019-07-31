@@ -206,7 +206,8 @@ public class UtilsAndroid extends CordovaPlugin {
 
     public void log(JSONArray args) {
         try{
-            Log.d(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
+            TAG = args.getJSONObject(0).getString("TAG");
+            Log.d(TAG, args.getJSONObject(0).getString("message"));
         }catch(Exception e){
             Log.e(TAG, "" + e);
         }
@@ -214,7 +215,8 @@ public class UtilsAndroid extends CordovaPlugin {
 
     public void logError(JSONArray args){
         try{
-            Log.e(args.getJSONObject(0).getString("TAG"), args.getJSONObject(0).getString("message"));
+            TAG = args.getJSONObject(0).getString("TAG");
+            Log.e(TAG, args.getJSONObject(0).getString("message"));
         }catch(Exception e){
             Log.e(TAG, "" + e);
         }
