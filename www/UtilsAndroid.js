@@ -16,10 +16,10 @@ module.exports.enableWifi = function (success, error){
     exec(success, error, 'UtilsAndroid', 'enableWifi');
 }
 
-module.exports.log = function (arg0){
-    exec( 'UtilsAndroid', 'log', [arg0]);
+module.exports.log = function (arg0, success, error){
+    exec(success, error, 'UtilsAndroid', 'log', [arg0]);
 }
 
-module.exports.logError = function (arg0){
-    exec('UtilsAndroid', 'logError', [arg0]);
+module.exports.logError = function (arg0, success, error){
+    exec(success, error,'UtilsAndroid', 'logError', [arg0]);
 }
