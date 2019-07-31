@@ -31,30 +31,30 @@ public class UtilsAndroid extends CordovaPlugin {
 
         context = this.cordova.getActivity().getApplicationContext();
 
-        Log.d(TAG, "in UtilsAndroid.java "+action);
+        //Log.d(TAG, "in UtilsAndroid.java "+action);
 
         if (action.equals("printTicket")) {
-            Log.d(TAG, "in action printTicket");
+            //Log.d(TAG, "in action printTicket");
             this.printTicket(args, callbackContext);
             return true;
         } else if (action.equals("getMacAddress")) {
-            Log.d(TAG, "in action getMacAddress");
+            //Log.d(TAG, "in action getMacAddress");
             this.getMacAddress(callbackContext);
             return true;
         } else if (action.equals("connectToWifi")) {
-            Log.d(TAG, "in action connectToWifi");
+            //Log.d(TAG, "in action connectToWifi");
             this.connectToWifi(args, callbackContext);
             return true;
         } else if (action.equals("enableWifi")) {
-            Log.d(TAG, "in action enableWifi");
+            //Log.d(TAG, "in action enableWifi");
             this.enableWifi(callbackContext);
             return true;
         } else if (action.equals("log")) {
-            Log.d(TAG, "in action log");
+            //Log.d(TAG, "in action log");
             this.log(args,callbackContext);
             return true;
         } else if (action.equals("logError")) {
-            Log.d(TAG, "in action logError");
+            //Log.d(TAG, "in action logError");
             this.logError(args,callbackContext);
             return true;
         }
@@ -64,7 +64,7 @@ public class UtilsAndroid extends CordovaPlugin {
     private void printTicket(JSONArray args, CallbackContext callback){
         if(args != null){
             try{
-                Log.d(TAG, "in print ticket.java");
+                //Log.d(TAG, "in print ticket.java");
                 
                 AsyncPrintTicket ticketPrinter = new AsyncPrintTicket(context, 
                 args.getJSONObject(0).getString("message"), 
