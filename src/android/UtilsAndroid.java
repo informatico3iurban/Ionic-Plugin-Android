@@ -16,6 +16,8 @@ import android.os.Handler;
 import android.os.Build;
 import android.content.Context;
 import java.util.Arrays;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class UtilsAndroid extends CordovaPlugin {
     private static final String TAG = "HOTEL_DIGITAL";
@@ -141,14 +143,14 @@ public class UtilsAndroid extends CordovaPlugin {
                 }
             }
 
-            verifyingConnection();
+            verifyingConnection(callback);
 
             //WiFi Connection success, return true
-            return true;
+           
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
             callback.error(e);
-            return false;
+            //return false;
         }
     }
 
@@ -158,7 +160,7 @@ public class UtilsAndroid extends CordovaPlugin {
         handler.postDelayed(new Runnable() {
             public void run() {
                 //Log.d(CustomConstants.TAG, "CONNECTED " + InternetHelper.wifiIsConnected(context));
-                if (!InternetHelper.wifiIsConnected(context)) {
+                if (!wifiIsConnected()) {
                     if(counter < 10) {
                         Log.d(TAG, "checking connection to " + conf.SSID + " " + conf.preSharedKey+" counter " + counter);
                         handler.postDelayed(this, 1000);
@@ -169,6 +171,12 @@ public class UtilsAndroid extends CordovaPlugin {
                 }
             }
         }, 1000);
+    }
+
+    public static boolean wifiIsConnected(){
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return mWifi.isConnected();
     }
 
     public void enableWifi(CallbackContext callback) {
