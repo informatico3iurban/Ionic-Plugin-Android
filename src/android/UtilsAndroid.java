@@ -162,10 +162,12 @@ public class UtilsAndroid extends CordovaPlugin {
             public void run() {
                 //Log.d(CustomConstants.TAG, "CONNECTED " + InternetHelper.wifiIsConnected(context));
                 if (!wifiIsConnected()) {
+                     counter++;
                     if(counter < 10) {
                         Log.d(TAG, "checking connection, counter " + counter);
-                        handler.postDelayed(this, 1000);
-                        counter++;
+                        handler.postDelayed(this, 1000);                       
+                    }else{
+                         callback.error("timeout");
                     }
                 } else {
                         callback.success("true"); 
