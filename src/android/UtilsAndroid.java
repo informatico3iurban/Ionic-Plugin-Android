@@ -22,6 +22,7 @@ import android.net.NetworkInfo;
 public class UtilsAndroid extends CordovaPlugin {
     private static final String TAG = "HOTEL_DIGITAL";
     private Context context;
+    int counter = 0;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -155,7 +156,7 @@ public class UtilsAndroid extends CordovaPlugin {
     }
 
     public void verifyingConnection(CallbackContext callback){
-        int counter = 0;
+        counter = 0;
         final Handler handler = new Handler();    
         handler.postDelayed(new Runnable() {
             public void run() {
