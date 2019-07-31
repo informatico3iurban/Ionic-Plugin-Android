@@ -51,11 +51,11 @@ public class UtilsAndroid extends CordovaPlugin {
             return true;
         } else if (action.equals("log")) {
             Log.d(TAG, "in action log");
-            this.log(args);
+            this.log(args,callbackContext);
             return true;
         } else if (action.equals("logError")) {
             Log.d(TAG, "in action logError");
-            this.logError(args);
+            this.logError(args,callbackContext);
             return true;
         }
         return false;
