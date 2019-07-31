@@ -103,7 +103,7 @@ public class UtilsAndroid extends CordovaPlugin {
             WifiManager wifiManager = (WifiManager) this.cordova.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
             String networkSSID = args.getJSONObject(0).getString("ssid");
-            String password = args.getJSONObject(0).getString("password")
+            String password = args.getJSONObject(0).getString("password");
 
             WifiConfiguration conf = new WifiConfiguration();
             conf.SSID = "\"" + networkSSID + "\"";
@@ -151,7 +151,7 @@ public class UtilsAndroid extends CordovaPlugin {
         }
     }
 
-    verifyingConnection(){
+    public void verifyingConnection(){
         int counter = 0;
         final Handler handler = new Handler();    
         handler.postDelayed(new Runnable() {
@@ -159,7 +159,7 @@ public class UtilsAndroid extends CordovaPlugin {
                 //Log.d(CustomConstants.TAG, "CONNECTED " + InternetHelper.wifiIsConnected(context));
                 if (!InternetHelper.wifiIsConnected(context)) {
                     if(counter < 10) {
-                        Log.d(TAG, 'checking connection to ' + conf.SSID + " " + conf.preSharedKey+" counter " + counter);
+                        Log.d(TAG, "checking connection to " + conf.SSID + " " + conf.preSharedKey+" counter " + counter);
                         handler.postDelayed(this, 1000);
                         counter++;
                     }
@@ -170,7 +170,7 @@ public class UtilsAndroid extends CordovaPlugin {
         }
     }
 
-    enableWifi() {
+    public void enableWifi() {
         try{
             boolean wifiEnabled = false;
             WifiManager wifiManager = (WifiManager) this.cordova.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
