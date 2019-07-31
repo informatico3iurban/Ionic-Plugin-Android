@@ -149,7 +149,7 @@ public class UtilsAndroid extends CordovaPlugin {
            
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
-            callback.error(e);
+            callback.error("" + e);
             //return false;
         }
     }
@@ -162,18 +162,18 @@ public class UtilsAndroid extends CordovaPlugin {
                 //Log.d(CustomConstants.TAG, "CONNECTED " + InternetHelper.wifiIsConnected(context));
                 if (!wifiIsConnected()) {
                     if(counter < 10) {
-                        Log.d(TAG, "checking connection to " + conf.SSID + " " + conf.preSharedKey+" counter " + counter);
+                        Log.d(TAG, "checking connection, counter " + counter);
                         handler.postDelayed(this, 1000);
                         counter++;
                     }
                 } else {
-                        callback.success(true); 
+                        callback.success("true"); 
                 }
             }
         }, 1000);
     }
 
-    public static boolean wifiIsConnected(){
+    public boolean wifiIsConnected(){
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return mWifi.isConnected();
@@ -186,9 +186,9 @@ public class UtilsAndroid extends CordovaPlugin {
             if (!wifiManager.isWifiEnabled()) {
                 wifiEnabled = wifiManager.setWifiEnabled(true);
             }
-            callback.success(wifiEnabled); 
+            callback.success(""+wifiEnabled); 
         }catch(Exception e){
-             callback.error(e);
+             callback.error("" + e);
         }
     }
 }
