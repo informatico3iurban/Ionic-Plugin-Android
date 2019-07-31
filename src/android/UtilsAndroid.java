@@ -27,7 +27,7 @@ public class UtilsAndroid extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        Log.d(TAG, "in UtilsAndroid.java "+action);
+        //Log.d(TAG, "in UtilsAndroid.java "+action);
 
         context = this.cordova.getActivity().getApplicationContext();
 
