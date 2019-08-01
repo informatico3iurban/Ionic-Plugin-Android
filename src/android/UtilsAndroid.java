@@ -204,6 +204,8 @@ public class UtilsAndroid extends CordovaPlugin {
         }
     }
 
+    
+
     public void log(JSONArray args, CallbackContext callback) {
         try{
             TAG = args.getJSONObject(0).getString("TAG");

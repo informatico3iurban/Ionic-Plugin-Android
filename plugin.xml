@@ -13,10 +13,7 @@
             <feature name="UtilsAndroid">
                 <param name="android-package" value="cordova.plugin.utilsandroid.UtilsAndroid" />
             </feature>
-        </config-file>
-        <config-file parent="/*" target="AndroidManifest.xml">
-            <uses-permission android:name="android.permission.REORDER_TASKS"/>
-        </config-file>
+        </config-file>       
         <source-file src="src/android/UtilsAndroid.java" target-dir="src/cordova/plugin/utilsandroid/UtilsAndroid" />
         <source-file src="src/android/AsyncPrintTicket.java" target-dir="src/cordova/plugin/utilsandroid/AsyncPrintTicket" />
     </platform>
