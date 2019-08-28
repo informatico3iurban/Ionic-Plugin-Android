@@ -24,14 +24,13 @@ public class UtilsAndroid extends CordovaPlugin {
     private Context context;
     int counter = 0, timeout = 10;
 
+    public static final String EXIT_KIOSK = "exitKiosk";    
+    public static final String IS_IN_KIOSK = "isInKiosk";
+    private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-        //Log.d(TAG, "in UtilsAndroid.java "+action);
-
         context = this.cordova.getActivity().getApplicationContext();
-
-        //Log.d(TAG, "in UtilsAndroid.java "+action);
 
         if (action.equals("printTicket")) {
             //Log.d(TAG, "in action printTicket");
@@ -56,6 +55,37 @@ public class UtilsAndroid extends CordovaPlugin {
         } else if (action.equals("logError")) {
             //Log.d(TAG, "in action logError");
             this.logError(args,callbackContext);
+            return true;
+        } else if (action.equals("setDeviceOwner")) {
+            //Log.d(TAG, "in action logError");
+            this.setDeviceOwner(callbackContext);
+            return true;
+        } else if (action.equals("setDeviceOwner")) {
+            //Log.d(TAG, "in action logError");
+            this.setDeviceOwner(callbackContext);
+            return true;
+        } else if (action.equals("enableKioskMode")) {
+            //Log.d(TAG, "in action logError");
+            this.enableKioskMode(callbackContext);
+            return true;
+        } else if (action.equals("removeDeviceOwner")) {
+            //Log.d(TAG, "in action logError");
+            this.removeDeviceOwner(callbackContext);
+            return true;
+        } else if (IS_IN_KIOSK.equals(action)) {                
+            callbackContext.success(Boolean.toString(KioskActivity.running));
+            return true;                
+        } else if (EXIT_KIOSK.equals(action)) {                
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
+            sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
+
+            Intent chooser = Intent.createChooser(intent, "Select destination...");
+            if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
+                cordova.getActivity().startActivity(chooser);
+            }                
+            callbackContext.success();
             return true;
         }
         return false;
@@ -223,6 +253,60 @@ public class UtilsAndroid extends CordovaPlugin {
             Log.e(TAG, args.getJSONObject(0).getString("message"));
         }catch(Exception e){
             Log.e(TAG, "" + e);
+        }
+    }
+
+    public void setDeviceOwner(CallbackContext callback) {
+        try {
+            Log.d(TAG, "in device owner");
+            Process su = Runtime.getRuntime().exec("su");
+            DataOutputStream outputStream = new DataOutputStream(su.getOutputStream());
+
+            outputStream.writeBytes("dpm setdeviceowner " + this.cordova.getActivity().packageName + "/" + this.cordova.getActivity().packageName + ".MyAdmin\n");
+            outputStream.flush();
+
+            outputStream.writeBytes("exit\n");
+            outputStream.flush();
+            su.waitFor();
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    public void enableKioskMode(CallbackContext callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) this.cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+            ComponentName mDPM = new ComponentName(this.cordova.getActivity(), MyAdmin.class);
+
+            if (this.mDevicePolicyManager != null && mDevicePolicyManager.isDeviceOwnerApp(activity.getPackageName())) {
+                //Log.d(CustomConstants.TAG," IS DEVICE OWNER ");
+                String[] packages = {this.cordova.getActivity().getPackageName()};
+                mDevicePolicyManager.setLockTaskPackages(this.mDPM, this.packages);
+                try {
+                    this.cordova.getActivity().startLockTask();
+                } catch (IllegalArgumentException iae) {
+                    iae.getMessage();
+                }
+            } /*else {
+                // Log.d(CustomConstants.TAG,"DISABLE "+(activity instanceof LicenseManager));
+
+                //if (disable_notif)
+                //    Utils.disablePullNotificationTouch(activity);
+
+                // if(activity instanceof MainActivity)
+                //setAsLauncher(activity);
+            }*/
+        }
+    }
+
+    public void removeDeviceOwner(CallbackContext callback) {        
+        try {
+            Log.d(TAG, "in removeDeviceOwner");
+            DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) this.cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+            mDevicePolicyManager.clearDeviceOwnerApp(this.packageName);
+            Log.d(TAG, "Device owner removed!");
+        } catch (SecurityException se) {
+            Log.e(TAG, se.toString());
         }
     }
 }
