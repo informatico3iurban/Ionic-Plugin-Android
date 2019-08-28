@@ -24,8 +24,8 @@ module.exports.logError = function (arg0, success, error){
     exec(success, error,'UtilsAndroid', 'logError', [arg0]);
 }
 
-module.exports.exitKiosk = function (success, error){
-    exec(success, error, 'UtilsAndroid', 'exitKiosk');
+module.exports.chooseLauncher = function (success, error){
+    exec(success, error, 'UtilsAndroid', 'chooseLauncher');
 }
 
 module.exports.enableKioskMode = function (success, error){

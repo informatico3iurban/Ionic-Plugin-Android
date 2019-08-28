@@ -35,9 +35,9 @@ public class UtilsAndroid extends CordovaPlugin {
     private Context context;
     int counter = 0, timeout = 10;
 
-    public static final String EXIT_KIOSK = "exitKiosk";    
-    public static final String IS_IN_KIOSK = "isInKiosk";
-    private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
+    //public static final String EXIT_KIOSK = "exitKiosk";    
+    //public static final String IS_IN_KIOSK = "isInKiosk";
+    //private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -71,10 +71,6 @@ public class UtilsAndroid extends CordovaPlugin {
             //Log.d(TAG, "in action logError");
             this.setDeviceOwner(callbackContext);
             return true;
-        } else if (action.equals("setDeviceOwner")) {
-            //Log.d(TAG, "in action logError");
-            this.setDeviceOwner(callbackContext);
-            return true;
         } else if (action.equals("enableKioskMode")) {
             //Log.d(TAG, "in action logError");
             this.enableKioskMode(callbackContext);
@@ -83,17 +79,20 @@ public class UtilsAndroid extends CordovaPlugin {
             //Log.d(TAG, "in action logError");
             this.removeDeviceOwner(callbackContext);
             return true;
-        } else if (EXIT_KIOSK.equals(action)) {                
+        } else if (action.equals("chooseLauncher")) {    
+
+            Log.d(TAG, "in choose launcher");
+
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
-            sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
+            //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
+            //sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
 
             Intent chooser = Intent.createChooser(intent, "Select destination...");
             if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
                 cordova.getActivity().startActivity(chooser);
             }                
-            callbackContext.success();
+            //callbackContext.success();
             return true;
         }
         return false;
