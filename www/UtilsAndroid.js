@@ -28,10 +28,6 @@ module.exports.exitKiosk = function (success, error){
     exec(success, error, 'UtilsAndroid', 'exitKiosk');
 }
 
-module.exports.isInKiosk = function (success, error){
-    exec(success, error, 'UtilsAndroid', 'isInKiosk');
-}
-
 module.exports.enableKioskMode = function (success, error){
     exec(success, error, 'UtilsAndroid', 'enableKioskMode');
 }

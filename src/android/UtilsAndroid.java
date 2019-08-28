@@ -19,6 +19,17 @@ import java.util.Arrays;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import android.annotation.TargetApi;
+import android.app.ActivityManager;
+import android.content.Intent;
+
+import android.content.SharedPreferences;
+
+import android.preference.PreferenceManager;
+import java.io.DataOutputStream;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+
 public class UtilsAndroid extends CordovaPlugin {
     private String TAG = "HOTEL_DIGITAL";
     private Context context;
@@ -72,9 +83,6 @@ public class UtilsAndroid extends CordovaPlugin {
             //Log.d(TAG, "in action logError");
             this.removeDeviceOwner(callbackContext);
             return true;
-        } else if (IS_IN_KIOSK.equals(action)) {                
-            callbackContext.success(Boolean.toString(KioskActivity.running));
-            return true;                
         } else if (EXIT_KIOSK.equals(action)) {                
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
@@ -262,7 +270,7 @@ public class UtilsAndroid extends CordovaPlugin {
             Process su = Runtime.getRuntime().exec("su");
             DataOutputStream outputStream = new DataOutputStream(su.getOutputStream());
 
-            outputStream.writeBytes("dpm setdeviceowner " + this.cordova.getActivity().packageName + "/" + this.cordova.getActivity().packageName + ".MyAdmin\n");
+            outputStream.writeBytes("dpm setdeviceowner " + this.cordova.getActivity().getPackageName() + "/" + this.cordova.getActivity().getPackageName() + ".MyAdmin\n");
             outputStream.flush();
 
             outputStream.writeBytes("exit\n");
@@ -303,7 +311,7 @@ public class UtilsAndroid extends CordovaPlugin {
         try {
             Log.d(TAG, "in removeDeviceOwner");
             DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) this.cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
-            mDevicePolicyManager.clearDeviceOwnerApp(this.packageName);
+            mDevicePolicyManager.clearDeviceOwnerApp(this.getPackageName());
             Log.d(TAG, "Device owner removed!");
         } catch (SecurityException se) {
             Log.e(TAG, se.toString());
