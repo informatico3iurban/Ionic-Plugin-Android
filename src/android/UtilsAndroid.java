@@ -242,8 +242,6 @@ public class UtilsAndroid extends CordovaPlugin {
         }
     }
 
-    
-
     public void log(JSONArray args, CallbackContext callback) {
         try{
             TAG = args.getJSONObject(0).getString("TAG");
@@ -286,10 +284,10 @@ public class UtilsAndroid extends CordovaPlugin {
             DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) this.cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
             ComponentName mDPM = new ComponentName(this.cordova.getActivity(), MyAdmin.class);
 
-            if (this.mDevicePolicyManager != null && mDevicePolicyManager.isDeviceOwnerApp(activity.getPackageName())) {
+            if (mDevicePolicyManager != null && mDevicePolicyManager.isDeviceOwnerApp(this.cordova.getActivity().getPackageName())) {
                 //Log.d(CustomConstants.TAG," IS DEVICE OWNER ");
                 String[] packages = {this.cordova.getActivity().getPackageName()};
-                mDevicePolicyManager.setLockTaskPackages(this.mDPM, this.packages);
+                mDevicePolicyManager.setLockTaskPackages(mDPM, packages);
                 try {
                     this.cordova.getActivity().startLockTask();
                 } catch (IllegalArgumentException iae) {
@@ -311,7 +309,7 @@ public class UtilsAndroid extends CordovaPlugin {
         try {
             Log.d(TAG, "in removeDeviceOwner");
             DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) this.cordova.getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
-            mDevicePolicyManager.clearDeviceOwnerApp(this.getPackageName());
+            mDevicePolicyManager.clearDeviceOwnerApp(this.cordova.getActivity().getPackageName());
             Log.d(TAG, "Device owner removed!");
         } catch (SecurityException se) {
             Log.e(TAG, se.toString());
